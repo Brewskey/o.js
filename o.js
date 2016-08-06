@@ -385,6 +385,32 @@
         }
 
         // +++
+        // gets a navigation property to an existing resource
+        // +++
+        base.getRef = base.removeRef = base.deleteRef = function (navPath, id) {
+            removeQuery('$format');
+            if (resource == null || resource.get) {
+                throwEx('You need to define a resource with the find() method to append an navigation property');
+            }
+            if (oConfig.version < 4) {
+                resource.path.push('$link');
+                resource.path.push({ resource: navPath, get: null });
+            }
+            else {
+                resource.path.push({ resource: navPath, get: null });
+            }
+            if (id) {
+                var newResource = parseUri(navPath);
+                newResource.path[newResource.path.length - 1].get = id;
+                var baseRes = buildQuery(newResource);
+                addQuery('$id', baseRes.substring(0, baseRes.length - 1));
+            }
+
+            return (base);
+        }
+
+
+        // +++
         // appends a navigation property to an existing resource
         // +++
         base.ref = base.link = function (navPath, id) {
