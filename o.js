@@ -387,7 +387,7 @@
         // +++
         // gets a navigation property to an existing resource
         // +++
-        base.getRef = base.removeRef = base.deleteRef = function (navPath, id) {
+        base.getRef = function (navPath, id) {
             removeQuery('$format');
             if (resource == null || resource.get) {
                 throwEx('You need to define a resource with the find() method to append an navigation property');
