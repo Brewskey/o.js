@@ -539,9 +539,9 @@
 
         // +++
         // does a update with the given Data to the current dataset
-        // always uses the PATCH http method
+        // using PATCH http method
         // +++
-        base.patch = base.put = function (data, res) {
+        base.patch = function (data, res) {
 
             //add the resource
             if (res) {
@@ -553,6 +553,27 @@
 
             //set the method and data
             resource.method = 'PATCH';
+            resource.data = data;
+
+            return (base);
+        }
+
+        // +++
+        // does a update with the given Data to the current dataset
+        // using PUT http method
+        // +++
+        base.put = function (data, res) {
+
+            //add the resource
+            if (res) {
+                addNewResource(res);
+            }
+
+            if (!resource.path[resource.path.length - 1] || !resource.path[resource.path.length - 1].get)
+                throwEx('Bulk updates are not supported. You need to query a unique resource with find() to patch/put it.');
+
+            //set the method and data
+            resource.method = 'PUT';
             resource.data = data;
 
             return (base);
@@ -900,7 +921,7 @@
                 //build a ajax request
                 var ajaxReq = createCORSRequest(resource.method, buildQuery());
                 //check if we only have one request or we need to force batch because of isXDomainRequest
-                if ((countMethod(['POST', 'PATCH', 'DELETE']) <= 1 && isSave) && !isXDomainRequest) {
+                if ((countMethod(['POST', 'PATCH', 'PUT', 'DELETE']) <= 1 && isSave) && !isXDomainRequest) {
                     startAjaxReq(ajaxReq, stringify(resource.data), callback, errorCallback, false,
                         [
                             { name: 'Accept', value: 'application/json' },
@@ -909,7 +930,7 @@
                         ],
                         param, resourceList[resourceList.length - 1].progress);
                     //because the post/put/delete is done, we remove the resource to assume that it will not be posted again
-                    removeResource(['POST', 'PATCH', 'DELETE']);
+                    removeResource(['POST', 'PATCH', 'PUT', 'DELETE']);
                 }
                 //do a $batch request
                 else {
