@@ -42,7 +42,7 @@
     }
 } (this, function (Q) {
     function o(res) {
-        var base = {};
+        var base = this;
 
         //base config object
         base.oConfig = base.oConfig || {
