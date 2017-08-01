@@ -160,6 +160,10 @@
 
         // ---------------------+++ PUBLICS +++----------------------------
 
+        base.customParam = function(name, value) {
+          addQuery(name, value);
+        }
+
         // +++
         // route is a little extra function to enable rest-like routing on the client side
         // +++
