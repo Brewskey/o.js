@@ -413,6 +413,14 @@
             return (base);
         }
 
+        // +++
+        // adds custom function to the path 
+        // +++
+        base.func = function (functionString) {
+            resource.path.push({ resource: functionString, get: null });
+            return base;
+        }
+
 
         // +++
         // appends a navigation property to an existing resource
