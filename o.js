@@ -164,6 +164,14 @@
           addQuery(name, value);
         }
 
+        base.appendQuery = function(customQuery) {
+            resource.appendingCustom = customQuery;
+        }
+
+        base.prependQuery = function(customQuery) {
+            resource.prependingCustom = customQuery;
+        }
+
         // +++
         // route is a little extra function to enable rest-like routing on the client side
         // +++
@@ -754,7 +762,7 @@
                 queryStr += '/';
             }
 
-            return (queryStr + res.appending + getQuery());
+            return (queryStr + res.prependingCustom + res.appending + getQuery() + res.appendingCustom);
         }
 
         // +++
@@ -1022,13 +1030,15 @@
             var uri = resource;
             var query = '';
             var reqObj = {
-                path: [], //array of all without the base
                 appending: '', // e.g. $count or $batch
+                appendingCustom: '',
+                data: null,
+                method: 'GET',
+                path: [], //array of all without the base
+                prependingCustom: '',
+                progress: null,
                 query: {}, //the query Array --> use base.queryArray
                 queryList: [],
-                method: 'GET',
-                data: null,
-                progress: null,
             };
 
             //query
