@@ -417,7 +417,7 @@
         // adds custom function to the path 
         // +++
         base.func = function (functionString) {
-            resource.path.push({ resource: functionString, get: null });
+            resource.path.push({ resource: functionString, get: null, isCustomRoute: true });
             return base;
         }
 
@@ -560,7 +560,8 @@
                 addNewResource(res);
             }
 
-            if (!resource.path[resource.path.length - 1] || !resource.path[resource.path.length - 1].get)
+            var lastPath = !resource.path[resource.path.length - 1];
+            if (!lastPath || (!lastPath.get && !lastPath.isCustomRoute)
                 throwEx('Bulk updates are not supported. You need to query a unique resource with find() to patch/put it.');
 
             //set the method and data
@@ -581,7 +582,8 @@
                 addNewResource(res);
             }
 
-            if (!resource.path[resource.path.length - 1] || !resource.path[resource.path.length - 1].get)
+            var lastPath = !resource.path[resource.path.length - 1];
+            if (!lastPath || (!lastPath.get && !lastPath.isCustomRoute)
                 throwEx('Bulk updates are not supported. You need to query a unique resource with find() to patch/put it.');
 
             //set the method and data
