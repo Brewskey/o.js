@@ -561,7 +561,7 @@
             }
 
             var lastPath = !resource.path[resource.path.length - 1];
-            if (!lastPath || (!lastPath.get && !lastPath.isCustomRoute)
+            if (!lastPath || (!lastPath.get && !lastPath.isCustomRoute))
                 throwEx('Bulk updates are not supported. You need to query a unique resource with find() to patch/put it.');
 
             //set the method and data
@@ -583,7 +583,7 @@
             }
 
             var lastPath = !resource.path[resource.path.length - 1];
-            if (!lastPath || (!lastPath.get && !lastPath.isCustomRoute)
+            if (!lastPath || (!lastPath.get && !lastPath.isCustomRoute))
                 throwEx('Bulk updates are not supported. You need to query a unique resource with find() to patch/put it.');
 
             //set the method and data
